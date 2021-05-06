@@ -10,16 +10,18 @@ const bcrypt = require('bcryptjs');
 
 const REALM_APP_ID = "website-oreme"; 
 const app = new Realm.App({ id: REALM_APP_ID });
+let mongodb, accounts
 const credentials = Realm.Credentials.anonymous();
 (async()=>{try {
   const user = await app.logIn(credentials);
   console.log("Successfully logged in!", user.id);
+  mongodb = app.currentUser.mongoClient("mongodb-atlas");
+  accounts = mongodb.db("NewBeginningsUserInfo").collection("Accounts");
   return user;
 } catch (err) {
   console.error("Failed to log in", err.message);
 }})()
-const mongodb = app.currentUser.mongoClient("mongodb-atlas");
-const accounts = mongodb.db("NewBeginningsUserInfo").collection("Accounts");
+console.log("Here")
 
 export class SignIn extends Component {
 

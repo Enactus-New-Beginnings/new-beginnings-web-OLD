@@ -128,6 +128,7 @@ const clothingColumns=[{
 }]
 
 export default function Resources() {
+    //localStorage.clear()
     const [data, setData] = React.useState([]);
     const [houseLoading, setHouse] = React.useState(true)
     const [clothLoading, setCloth] = React.useState(true)
