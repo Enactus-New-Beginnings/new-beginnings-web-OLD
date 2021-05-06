@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Nav, Navbar, Row, Col} from "react-bootstrap";
+import {Nav, Navbar} from "react-bootstrap";
 import {Link, HashRouter as Router} from "react-router-dom";
 import "../styles.css";
 export const NavigationBar = () => (

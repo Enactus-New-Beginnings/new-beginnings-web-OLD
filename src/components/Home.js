@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Row, Col, Nav} from 'react-bootstrap';
+import {Row, Col, Nav, Container} from 'react-bootstrap';
 import {Link, HashRouter as Router} from "react-router-dom"
 import handshake from '../assets/handshake.png';
 import briefcase from '../assets/briefcase.png';
@@ -10,11 +10,11 @@ import "./Home.css";
 export class Home extends Component {
     render () {
         return (
-            <div>
+            <Container fluid className = 'container'>
                 <Row>
                     <div className = "home-padding"></div>
                         <Col xs={12} sm={12} md={12} lg={5} xl={3} > 
-                            <img className = "home-logo" src={logo}/> </Col>
+                            <img alt="" className = "home-logo" src={logo}/> </Col>
                         <Col xs={12} sm={12} md={12} lg={6} xl={8}>
                             <div className="home-textbox-mission">
                                 <p>
@@ -32,19 +32,19 @@ export class Home extends Component {
                 <Row> 
                     <Col sm = "12" md ="12" lg="12" xl = "4" className = "box-outline">
                         <Col  className = "home-textbox-1"> <h3> Mentorship</h3>
-                        <Nav.Item><Nav.Link as = {Link} to = "/mentorship"><img src = {handshake} height = {50}></img></Nav.Link></Nav.Item>
+                        <Nav.Item><Nav.Link as = {Link} to = "/mentorship"><img alt="" src = {handshake} height = {50}></img></Nav.Link></Nav.Item>
                         <p> Connect with like-minded people who turned their lives around upon re-entering society. Studies show that people with strong mentors are twice as likely to get employed. Click here if you’d like to mentor!</p>
                         </Col>
                     </Col>
 
                     <Col sm = "12" md ="12" lg="12" xl = "4" className = "box-outline" >
                         <Col  className = "home-textbox-1"> <h3> Employment</h3>
-                        <Nav.Item><Nav.Link as = {Link} to = "/employment"><img src = {briefcase} height = {50}></img></Nav.Link></Nav.Item>
+                        <Nav.Item><Nav.Link as = {Link} to = "/employment"><img alt="" src = {briefcase} height = {50}></img></Nav.Link></Nav.Item>
                         <p>Reach out to employers who don’t discriminate based on past convictions. <br></br> <br></br>If you’d like to have your business featured please click here!  </p></Col>
                     </Col>
                     <Col sm = "12" md ="12" lg="12" xl = "4" className = "box-outline">
                         <Col className = "home-textbox-1"> <h3>Resources</h3> 
-                        <Nav.Item><Nav.Link as = {Link} to = "/profdev"><img src = {books} height = {50}></img></Nav.Link></Nav.Item>
+                        <Nav.Item><Nav.Link as = {Link} to = "/profdev"><img alt="" src = {books} height = {50}></img></Nav.Link></Nav.Item>
                         <p>Here you can find a cirrculum to guide your professional development, (as well as other local resources: affordable housing, local support groups, transportation etc.) </p></Col>
                     </Col>
                 </Row>
@@ -54,7 +54,7 @@ export class Home extends Component {
                 <Row> 
                     <Col xs = "12" sm = "12" md ="12" lg="5" xl = "5" className = "image-outline">
                         <Col >
-                        <img className = "home-logo" src={logo}/> 
+                        <img className = "home-logo" src={logo} alt=""/> 
                         </Col>
                     </Col>
                     <Col xs = "12" sm = "12" md ="12" lg="7" xl = "7" className = "feedback-outline">
@@ -64,7 +64,7 @@ export class Home extends Component {
                     </Col>
                 </Row>
                 <div className = "space80"></div>
-            </div>
+            </Container>
         )
     }
 }

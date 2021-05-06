@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-
+import {Container} from 'react-bootstrap';
 export class MobileApp extends Component {
     render () {
         return (
-            <div>
-                <p> Updates regarding the mobile application...
-                </p>
-            </div>
+            <Container fluid className = 'container'>
+                <p> Updates regarding the mobile application...</p>
+            </Container>
         )
     }
 }

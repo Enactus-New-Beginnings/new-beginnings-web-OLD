@@ -1,6 +1,6 @@
 import React from "react";
-import { useFilters, useGlobalFilter, useTable } from "react-table";
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { useFilters, useTable } from "react-table";
+import { withStyles} from '@material-ui/core/styles';
 import MaUTable from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -22,7 +22,8 @@ export default function Table({ columns, data }) {
         },
         useFilters
       );
-
+      if(getTableBodyProps!=null)
+        console.log("not null")
   const [filterInput, setFilterInput] = React.useState("");
   const StyledTableRow = withStyles((theme) => ({
   root: {

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Table from "./Table"
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
@@ -71,7 +71,7 @@ const foodColumns=[{
             Header: "Site",
             accessor: "site",
             Cell: ({ row }) => {
-                if(row.original.site!='N/A')
+                if(row.original.site!=='N/A')
                     return <a href={row.original.site}>Site</a>
                 return <p>N/A</p>
             }
@@ -110,7 +110,11 @@ const clothingColumns=[{
         },{
             Header: "Site",
             accessor: "site",
-            Cell: ({ row }) => <a href={row.original.site}>Site</a>
+            Cell: ({ row }) => {
+                if(row.original.site!=='N/A')
+                    return <a href={row.original.site}>Site</a>
+                return <p>N/A</p>
+            }
         },{
             Header: "Timing",
             accessor: "timing"
