@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/new-beginnings-web/static/css/main.60e4f99e.chunk.css",
+    "main.js": "/new-beginnings-web/static/js/main.e83151ff.chunk.js",
+    "main.js.map": "/new-beginnings-web/static/js/main.e83151ff.chunk.js.map",
+    "runtime-main.js": "/new-beginnings-web/static/js/runtime-main.03417e38.js",
+    "runtime-main.js.map": "/new-beginnings-web/static/js/runtime-main.03417e38.js.map",
+    "static/css/2.4c97ca4f.chunk.css": "/new-beginnings-web/static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.6ed9e67f.chunk.js": "/new-beginnings-web/static/js/2.6ed9e67f.chunk.js",
+    "static/js/2.6ed9e67f.chunk.js.map": "/new-beginnings-web/static/js/2.6ed9e67f.chunk.js.map",
+    "index.html": "/new-beginnings-web/index.html",
+    "static/css/2.4c97ca4f.chunk.css.map": "/new-beginnings-web/static/css/2.4c97ca4f.chunk.css.map",
+    "static/css/main.60e4f99e.chunk.css.map": "/new-beginnings-web/static/css/main.60e4f99e.chunk.css.map",
+    "static/js/2.6ed9e67f.chunk.js.LICENSE.txt": "/new-beginnings-web/static/js/2.6ed9e67f.chunk.js.LICENSE.txt",
+    "static/media/StockMentorship.5a656906.jpg": "/new-beginnings-web/static/media/StockMentorship.5a656906.jpg",
+    "static/media/logo.c8196b37.png": "/new-beginnings-web/static/media/logo.c8196b37.png",
+    "static/media/styles.css": "/new-beginnings-web/static/media/sunrise.e5b17b65.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.03417e38.js",
+    "static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.6ed9e67f.chunk.js",
+    "static/css/main.60e4f99e.chunk.css",
+    "static/js/main.e83151ff.chunk.js"
+  ]
+}
