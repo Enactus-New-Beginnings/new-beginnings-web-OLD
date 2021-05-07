@@ -10,7 +10,6 @@ import TableRow from "@material-ui/core/TableRow";
 export default function Table({ columns, data }) {
     const {
         getTableProps,
-        getTableBodyProps,
         headerGroups,
         rows,
         prepareRow,
@@ -22,8 +21,6 @@ export default function Table({ columns, data }) {
         },
         useFilters
       );
-      if(getTableBodyProps!=null)
-        console.log("not null")
   const [filterInput, setFilterInput] = React.useState("");
   const StyledTableRow = withStyles((theme) => ({
   root: {
