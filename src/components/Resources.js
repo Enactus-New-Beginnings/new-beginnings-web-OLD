@@ -215,7 +215,8 @@ let defaultSort=({setData}, {setOpen}, {setHouse}, {setFood}, {setCloth}, {setTa
      });
      setOpen(false)
 }
-export default function Resources() {
+export default function Resources(props) {
+    console.log(props.logged)
     //localStorage.clear()
     const [open, setOpen] = React.useState(false);
     const [data, setData] = React.useState([]);

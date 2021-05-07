@@ -5,10 +5,12 @@ import { GoogleLogin } from 'react-google-login';
 import '../styles.css'
 import './Home.css'
 import firebase from './Firebase.js'
+import Profile from './Profile'
 
 // Add the Firebase services that you want to use
 
 import "firebase/auth";
+import "firebase/database";
 
 export class Register extends Component {
   state = {
@@ -16,10 +18,16 @@ export class Register extends Component {
     Password: "",
     First: "",
     Last: "",
+    Address: "",
     message: "",
     emailvalid:true,
     googleEmailValid:true,
-    isLogged:false
+    isLogged:false,
+    userFirst: "",
+    userLast: "",
+    userAddress: "",
+    userEmail:"",
+    uid: ""
   };
   signOut = ()=>{
     firebase.auth().signOut().then(() => {
@@ -51,6 +59,12 @@ export class Register extends Component {
         .then((userCredential) => {
           // Signed in 
           console.log(userCredential.user);
+          firebase.database().ref('users/'+userCredential.user.uid).set({
+            firstName: this.state.First,
+            lastName: this.state.Last,
+            email: this.state.Email,
+            address: this.state.Address
+          })
           // ...
         })
         .catch((error) => {
@@ -77,16 +91,13 @@ export class Register extends Component {
   googleFailure = (response) =>{
     console.log(response);
   }
-  componentDidUpdate(prevProps) {
-    console.log(this.props.logged, prevProps.logged)
-    if(this.props.logged!==prevProps.logged)
-    {
-      console.log(this.props.logged, prevProps.logged)
-      this.setState({isLogged:this.props.logged})
-    }
-  } 
   componentDidMount(){
-    this.setState({isLogged:this.props.logged})
+    this.setState({isLogged:this.props.logged, 
+      userFirst: this.props.first, 
+      userLast: this.props.last,
+      userAddress: this.props.address, 
+      uid: this.props.uid,
+      userEmail: this.props.email})
   }
   render(){
       return (
@@ -94,10 +105,11 @@ export class Register extends Component {
             <div className = "space80"></div>
               <Row className = "outline" onClick = {this.handleClick}>
                 <Col className = "centered">
-                  {this.state.isLogged?<div>
-                    <h1>My Account</h1>
-                    <button className = "sign-in" style={{paddingLeft:"20px",paddingRight:"20px"}} onClick = {this.signOut}> <h4>Logout</h4> </button> 
-                  </div>:
+                  {this.state.isLogged?<Profile first={this.state.userFirst} 
+                  last={this.state.userLast} 
+                  address={this.state.userAddress} 
+                  uid={this.state.uid}
+                  email={this.state.userEmail}/>:
                   <div>
                     <h2>Creating Your Account</h2>
                     <div className = "space20"></div>
@@ -136,6 +148,15 @@ export class Register extends Component {
                       <Row>
                           <h5>
                             <input type="password" onChange = {this.getValue} placeholder="Enter Password" name="Password" id="password" required></input>
+                          </h5>
+                      </Row>
+                      <div className = "space20"> </div>
+                      <Row className = "signin_padding">
+                        <h4>Address (Optional): </h4> 
+                      </Row>
+                      <Row>
+                          <h5>
+                            <input type="text" onChange = {this.getValue} placeholder="Enter Address, City, State, Zip" name="Address" id="address"></input>
                           </h5>
                       </Row>
                       {this.state.message==="success"? <p className = "signin-success">Successfully created an account</p>: this.state.message==="error"? <p className = "createAcc-error">Make sure everything is typed correctly</p>: this.state.message==="emailInvalid"? <p className = "createAcc-error">Account already exists for that email. Try using another email.</p>: <p className = "createAcc-error"><br></br></p>}

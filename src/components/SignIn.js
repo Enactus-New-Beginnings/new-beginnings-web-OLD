@@ -3,6 +3,7 @@ import {Row, Col, Container} from 'react-bootstrap';
 import logo from '../assets/logo.png'; 
 import {Link} from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login';
+import Profile from './Profile'
 import '../styles.css'
 import '../components/Home.css'
 import firebase from './Firebase.js'
@@ -14,7 +15,12 @@ export class SignIn extends Component {
     Email: null,
     Password: null,
     message: "",
-    isLogged: false
+    isLogged: false,
+    userFirst: "",
+    userLast: "",
+    userAddress: "",
+    userEmail:"",
+    uid: ""
   };
   signOut = ()=>{
     firebase.auth().signOut().then(() => {
@@ -66,22 +72,19 @@ export class SignIn extends Component {
   googleFailure = (response) => {
     console.log(response);
   }
-  componentDidUpdate(prevProps) {
-    console.log(this.props.logged, prevProps.logged)
-    if(this.props.logged!==prevProps.logged)
-    {
-      console.log(this.props.logged, prevProps.logged)
-      this.setState({isLogged:this.props.logged})
-    }
-  } 
   componentDidMount(){
-    this.setState({isLogged:this.props.logged})
+    this.setState({isLogged:this.props.logged, 
+      userFirst: this.props.first, 
+      userLast: this.props.last,
+      userAddress: this.props.address, 
+      uid: this.props.uid,
+      userEmail: this.props.email})
   }
     render(){
 
         return (
           <Container fluid className = 'container'>
-              <Row> 
+              {this.state.isLogged?<div></div>:<div><Row> 
                 <div className = "home-padding"></div>
                     <Col xs={12} sm={12} md={12} lg={5} xl={3} > 
                         <img className = "home-logo" src={logo} alt=""/> </Col>
@@ -95,14 +98,15 @@ export class SignIn extends Component {
                         </div>
                     </Col>
                 </Row>
-                <div className = "space80"></div>
+                <div className = "space80"></div></div>}
 
                 <Row className = "outline">
                   <Col className = "centered">
-                  {this.state.isLogged?<div>
-                    <h1>My Account</h1>
-                    <button className = "sign-in" style={{paddingLeft:"20px",paddingRight:"20px"}} onClick = {this.signOut}> <h4>Logout</h4> </button> 
-                  </div>:<div>
+                  {this.state.isLogged?<Profile first={this.state.userFirst} 
+                  last={this.state.userLast} 
+                  address={this.state.userAddress} 
+                  uid={this.state.uid}
+                  email={this.state.userEmail}/>:<div>
                       <h2>Account Login</h2>
                       <div className = "space20"></div>
                       <div className = "space10"> </div>
