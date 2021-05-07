@@ -12,8 +12,17 @@ import {Register} from './components/Register';
 import { NavigationBar } from './components/NavigationBar';
 import { Helmet } from 'react-helmet';
 import "./styles.css";
+import firebase from './components/Firebase.js'
 
 function App(){
+  const [logged, setLogged]=React.useState(false)
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      setLogged(true)
+    } else{
+      setLogged(false)
+    }
+  });
     return (
       <>
       <div>
@@ -36,8 +45,8 @@ function App(){
            <Employment/>
           </Route>
          <Route path = "/mobileapp" exact component = {MobileApp} />
-         <Route path = "/signin" exact component = {SignIn} />
-         <Route path = "/register" exact component = {Register} />
+         <Route path = "/signin" exact  component = {()=><SignIn logged={logged}/>} logged={logged} />
+         <Route path = "/register" exact component = {()=><Register logged={logged}/>} logged={logged} />
          
         </Router>
 

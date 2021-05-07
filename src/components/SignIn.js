@@ -5,32 +5,24 @@ import {Link} from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login';
 import '../styles.css'
 import '../components/Home.css'
-import * as Realm from "realm-web";
-const bcrypt = require('bcryptjs');
-
-const REALM_APP_ID = "website-oreme"; 
-const app = new Realm.App({ id: REALM_APP_ID });
-let mongodb, accounts
-const credentials = Realm.Credentials.anonymous();
-(async()=>{try {
-  const user = await app.logIn(credentials);
-  console.log("Successfully logged in!", user.id);
-  mongodb = app.currentUser.mongoClient("mongodb-atlas");
-  accounts = mongodb.db("NewBeginningsUserInfo").collection("Accounts");
-  return user;
-} catch (err) {
-  console.error("Failed to log in", err.message);
-}})()
-console.log("Here")
+import firebase from './Firebase.js'
+import "firebase/auth";
 
 export class SignIn extends Component {
 
   state = {
     Email: null,
     Password: null,
-    message: ""
+    message: "",
+    isLogged: false
   };
-
+  signOut = ()=>{
+    firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
   getValue = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -52,38 +44,39 @@ export class SignIn extends Component {
         this.setState({message:"error2"});
       }
       else{
-        const acc = await accounts.findOne({
-          Email:this.state.Email.toLowerCase(),
+        firebase.auth().signInWithEmailAndPassword(this.state.Email, this.state.Password)
+        .then((userCredential) => {
+          // Signed in
+          var user = userCredential.user;
+          console.log(user)
+          // ...
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode, errorMessage)
         });
-        if(acc!=null && bcrypt.compareSync(this.state.Password, acc.Password)){
-          this.setState({message:"success"});
-          console.log(JSON.stringify(acc));
-        }
-        else{
-          this.setState({message:"error1"});
-        }
       }
     })();
   };
 
   googleSuccess = (response) => {
     console.log(response);
-    (async () =>{
-      const acc = await accounts.findOne({
-        Email:response.profileObj.email.toLowerCase(),
-      });
-      if(acc==null){
-        this.setState({message:"error1"});
-      }
-      else{
-        this.setState({message:"success"});
-      }
-    })();
   }
   googleFailure = (response) => {
     console.log(response);
   }
-
+  componentDidUpdate(prevProps) {
+    console.log(this.props.logged, prevProps.logged)
+    if(this.props.logged!==prevProps.logged)
+    {
+      console.log(this.props.logged, prevProps.logged)
+      this.setState({isLogged:this.props.logged})
+    }
+  } 
+  componentDidMount(){
+    this.setState({isLogged:this.props.logged})
+  }
     render(){
 
         return (
@@ -106,6 +99,10 @@ export class SignIn extends Component {
 
                 <Row className = "outline">
                   <Col className = "centered">
+                  {this.state.isLogged?<div>
+                    <h1>My Account</h1>
+                    <button className = "sign-in" style={{paddingLeft:"20px",paddingRight:"20px"}} onClick = {this.signOut}> <h4>Logout</h4> </button> 
+                  </div>:<div>
                       <h2>Account Login</h2>
                       <div className = "space20"></div>
                       <div className = "space10"> </div>
@@ -143,7 +140,7 @@ export class SignIn extends Component {
                         cookiePolicy={'single_host_origin'}
                       />
                       <div className = "space20"></div> 
-                      <p>Don't have an account? <u><Link to ="/register">Click here to sign up!</Link></u></p>
+                      <p>Don't have an account? <u><Link to ="/register">Click here to sign up!</Link></u></p>4</div>}
                   </Col>
                 </Row>
                 <div className = "space80"></div>

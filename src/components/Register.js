@@ -4,23 +4,11 @@ import {Link} from 'react-router-dom'
 import { GoogleLogin } from 'react-google-login';
 import '../styles.css'
 import './Home.css'
-import * as Realm from "realm-web";
-const bcrypt = require('bcryptjs');
+import firebase from './Firebase.js'
 
-const REALM_APP_ID = "website-oreme"; 
-const app = new Realm.App({ id: REALM_APP_ID });
-let mongodb, accounts
-const credentials = Realm.Credentials.anonymous();
-(async()=>{try {
-  const user = await app.logIn(credentials);
-  console.log("Successfully logged in!", user.id);
-  mongodb = app.currentUser.mongoClient("mongodb-atlas");
-  accounts = mongodb.db("NewBeginningsUserInfo").collection("Accounts");
-  return user;
-} catch (err) {
-  console.error("Failed to log in", err.message);
-}})()
+// Add the Firebase services that you want to use
 
+import "firebase/auth";
 
 export class Register extends Component {
   state = {
@@ -30,9 +18,16 @@ export class Register extends Component {
     Last: "",
     message: "",
     emailvalid:true,
-    googleEmailValid:true
+    googleEmailValid:true,
+    isLogged:false
   };
-  
+  signOut = ()=>{
+    firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
   getValue = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -48,26 +43,22 @@ export class Register extends Component {
     var lt = document.getElementById("last");
     //if form is valid then add details to database
     (async () => {
-      const acc = await accounts.findOne({
-        Email:this.state.Email.toLowerCase(),
-      });
-      if(acc!=null){
-        this.setState({message:"emailInvalid"});
-      }
       if(em.checkValidity() && pw.checkValidity() && ft.checkValidity() && lt.checkValidity() && this.state.message !== "emailInvalid"){
-        const salt = bcrypt.genSaltSync(10);
-        const passwordHash = bcrypt.hashSync(this.state.Password, salt);
-        console.log(passwordHash);
-        //result
-        await accounts.insertOne({
-          Email: this.state.Email.toLowerCase(),
-          Password: passwordHash,
-          First: this.state.First.toLowerCase(),
-          Last: this.state.Last.toLowerCase(),
-        });
-          //welcomes user
-        this.setState({message:"success"});
-        console.log("success");
+        console.log("email", this.state.Email)
+        //First, Last, Email, Password
+        // Create an email/password credential
+        firebase.auth().createUserWithEmailAndPassword(this.state.Email, this.state.Password)
+        .then((userCredential) => {
+          // Signed in 
+          console.log(userCredential.user);
+          // ...
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode, errorMessage)
+          // ..
+        })
       }
       else if(this.state.message === "emailInvalid"){
         this.setState({message:"emailInvalid"})
@@ -82,36 +73,32 @@ export class Register extends Component {
   //registering with Google
   googleSuccess = (response) => {
     console.log(response);
-    (async () =>{
-      const acc = await accounts.findOne({
-        Email:response.profileObj.email.toLowerCase(),
-      });
-      if(acc!==null){
-        this.setState({message:"emailInvalid"});
-      }
-      else{
-        this.setState({message:"success"});
-      }
-      if(this.state.message==="success"){
-        //result
-        await accounts.insertOne({
-          Email: response.profileObj.email.toLowerCase(),
-          First: response.profileObj.givenName,
-          Last: response.profileObj.familyName,
-        });
-      }
-    })();
   }
   googleFailure = (response) =>{
     console.log(response);
   }
-
+  componentDidUpdate(prevProps) {
+    console.log(this.props.logged, prevProps.logged)
+    if(this.props.logged!==prevProps.logged)
+    {
+      console.log(this.props.logged, prevProps.logged)
+      this.setState({isLogged:this.props.logged})
+    }
+  } 
+  componentDidMount(){
+    this.setState({isLogged:this.props.logged})
+  }
   render(){
       return (
         <Container fluid className = 'container'>
             <div className = "space80"></div>
               <Row className = "outline" onClick = {this.handleClick}>
                 <Col className = "centered">
+                  {this.state.isLogged?<div>
+                    <h1>My Account</h1>
+                    <button className = "sign-in" style={{paddingLeft:"20px",paddingRight:"20px"}} onClick = {this.signOut}> <h4>Logout</h4> </button> 
+                  </div>:
+                  <div>
                     <h2>Creating Your Account</h2>
                     <div className = "space20"></div>
                     <div className = "space10"> </div>
@@ -166,7 +153,7 @@ export class Register extends Component {
                         />
                         <div className = "space20"></div> 
                         <p>Already have an account? <u><Link to ="/signin">Click here to sign in.</Link></u></p>
-                    </form>
+                    </form></div>}
                 </Col>
               </Row>
               <div className = "space80"></div>

@@ -19,7 +19,7 @@ export const NavigationBar = () => (
       <Nav.Item><Nav.Link as = {Link} to = "/employment"><h5>Employment</h5></Nav.Link></Nav.Item>
       <Nav.Item><Nav.Link as = {Link} to = "/resources"><h5>Resources</h5></Nav.Link></Nav.Item>
       <Nav.Item><Nav.Link as = {Link} to = "/app"><h5>App</h5></Nav.Link></Nav.Item>
-      <Nav.Item><Nav.Link as = {Link} to = "/signin"><h5>Sign In</h5></Nav.Link></Nav.Item>
+      <Nav.Item><Nav.Link as = {Link} to = "/signin"><h5>Profile</h5></Nav.Link></Nav.Item>
       
       </Router>
     </Nav>
