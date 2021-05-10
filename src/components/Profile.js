@@ -2,17 +2,15 @@ import React from 'react';
 import firebase from './Firebase.js'
 import "firebase/auth";
 import "firebase/database";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from "@material-ui/core/Button";
+import Popup from './Popup'
 export default function Profile(props){
-    const [open, setOpen] = React.useState(false);
     const [diagText, setDiagText] = React.useState("")
     const [diagTitle, setDiagTitle] = React.useState("")
     const [address, setAddress] = React.useState("")
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => {
+        setOpen(false);
+      };
     let signOut = ()=>{
         firebase.auth().signOut().then(() => {
           // Sign-out successful.
@@ -22,7 +20,7 @@ export default function Profile(props){
       }
       const explainLoc = () => {
           setDiagTitle("Why do we ask for your location?")
-          setDiagText("This is an entirely optional feature which allows us to display all resources found on our \"Resources\" and \"Employment\" tabs in ascending order based on how close they are to your location.")
+          setDiagText("This is an entirely optional feature which allows us to display how close you are to each location found in our \"Resources\" and \"Employment\" tabs, as well as Google Maps directions to them. Your information is securely stored and we will not use this data for any other purpose.")
         setOpen(true);
       };
       const updateAddressSuccess = ()=>{
@@ -36,9 +34,6 @@ export default function Profile(props){
           setDiagText("Your address has successfully been saved to our database. You may need to refresh this page to see changes.")
           setOpen(true)
       }
-      const handleClose = () => {
-        setOpen(false);
-      };
       const addressOnChange=(event)=>{
           setAddress(event.target.value)
       }
@@ -51,24 +46,7 @@ export default function Profile(props){
             Change Address: <input onChange={addressOnChange} style={{width: "60%"}} type="text" placeholder="Enter Address, City, State, Zip" name="First" id="first" required></input>
             <button onClick={updateAddressSuccess}>Update</button>
         </h5>
-        <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        >
-            <DialogTitle id="alert-dialog-title">{diagTitle}</DialogTitle>
-            <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-                {diagText}
-            </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-            <Button onClick={handleClose} color="primary">
-                OK
-            </Button>
-            </DialogActions>
-        </Dialog>
+        <Popup open={open} handleClose={handleClose} diagTitle={diagTitle} diagText={diagText}/>
         <button className = "sign-in" style={{paddingLeft:"20px",paddingRight:"20px"}} onClick = {signOut}> <h4>Logout</h4> </button> 
       </div>)
 }

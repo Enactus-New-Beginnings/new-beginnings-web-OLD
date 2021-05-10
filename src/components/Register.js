@@ -6,6 +6,7 @@ import '../styles.css'
 import './Home.css'
 import firebase from './Firebase.js'
 import Profile from './Profile'
+import Popup from './Popup'
 
 // Add the Firebase services that you want to use
 
@@ -27,7 +28,8 @@ export class Register extends Component {
     userLast: "",
     userAddress: "",
     userEmail:"",
-    uid: ""
+    uid: "",
+    open: false
   };
   signOut = ()=>{
     firebase.auth().signOut().then(() => {
@@ -91,6 +93,12 @@ export class Register extends Component {
   googleFailure = (response) =>{
     console.log(response);
   }
+  handleClose = () => {
+        this.setState({open:false});
+  };
+  handleOpen = ()=>{
+    this.setState({open:true})
+  }
   componentDidMount(){
     this.setState({isLogged:this.props.logged, 
       userFirst: this.props.first, 
@@ -99,6 +107,8 @@ export class Register extends Component {
       uid: this.props.uid,
       userEmail: this.props.email})
   }
+  diagTitle="Why do we ask for your location?"
+  diagText="This is an entirely optional feature which allows us to display how close you are to each location found in our \"Resources\" and \"Employment\" tabs, as well as Google Maps directions to them. Your information is securely stored and we will not use this data for any other purpose."
   render(){
       return (
         <Container fluid className = 'container'>
@@ -152,13 +162,14 @@ export class Register extends Component {
                       </Row>
                       <div className = "space20"> </div>
                       <Row className = "signin_padding">
-                        <h4>Address (Optional): </h4> 
+                        <h4>Address (Optional): <button className="link" onClick={this.handleOpen}>Why should I add my address?</button></h4> 
                       </Row>
                       <Row>
                           <h5>
                             <input type="text" onChange = {this.getValue} placeholder="Enter Address, City, State, Zip" name="Address" id="address"></input>
                           </h5>
                       </Row>
+                      <Popup open={this.state.open} handleClose={this.handleClose} diagTitle={this.diagTitle} diagText={this.diagText}/>
                       {this.state.message==="success"? <p className = "signin-success">Successfully created an account</p>: this.state.message==="error"? <p className = "createAcc-error">Make sure everything is typed correctly</p>: this.state.message==="emailInvalid"? <p className = "createAcc-error">Account already exists for that email. Try using another email.</p>: <p className = "createAcc-error"><br></br></p>}
                         <button className = "sign-in" style={{paddingLeft:"20px",paddingRight:"20px"}} onClick = {this.handleSubmit}> <h4>Create Account</h4> </button> 
                         <div className = "space10"></div>
