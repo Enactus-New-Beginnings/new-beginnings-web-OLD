@@ -6,6 +6,7 @@ import briefcase from '../assets/briefcase.png';
 import books from '../assets/books.png';
 import logo from '../assets/logo.png';
 import "./Home.css";
+import YoutubeEmbed from "./YoutubeEmbed";
 
 export class Home extends Component {
     render () {

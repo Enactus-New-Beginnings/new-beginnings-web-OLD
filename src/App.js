@@ -66,7 +66,6 @@ function App(){
          <Route path = "/mobileapp" exact component = {MobileApp} />
          <Route path = "/signin" exact  component = {()=><SignIn logged={logged} first={first} last={last} address={address} uid={uid} email={email}/>} logged={logged} />
          <Route path = "/register" exact component = {()=><Register logged={logged} first={first} last={last} address={address} uid={uid} email={email}/>} logged={logged} />
-         
         </Router>
 
       </>
