@@ -14,6 +14,7 @@ import { Helmet } from 'react-helmet';
 import "./styles.css";
 import firebase from './components/Firebase.js'
 import "firebase/database";
+import {Videos} from './components/Videos';
 
 function App(){
   const [logged, setLogged]=React.useState(false)
@@ -63,6 +64,7 @@ function App(){
          <Route path = "/employment" >
            <Employment/>
           </Route>
+         <Route path = "/videos" exact component = {Videos} />
          <Route path = "/mobileapp" exact component = {MobileApp} />
          <Route path = "/signin" exact  component = {()=><SignIn logged={logged} first={first} last={last} address={address} uid={uid} email={email}/>} logged={logged} />
          <Route path = "/register" exact component = {()=><Register logged={logged} first={first} last={last} address={address} uid={uid} email={email}/>} logged={logged} />
