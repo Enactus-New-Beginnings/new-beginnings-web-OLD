@@ -1,7 +1,7 @@
 import React from 'react';
 import {Container} from 'react-bootstrap';
 import Table from "./Table"
-const fetch = require('node-fetch');
+const axios=require('axios')
 //name field time link address phone exp education major
 const columns=[{
     Header: 'Employment',
