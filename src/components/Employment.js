@@ -43,14 +43,18 @@ export default function Employment() {
     const [data, setData] = React.useState([]);
     const [loaded, setLoaded] = React.useState(false)
     React.useEffect(() => {
-            // fetch('https://sortbydistance.herokuapp.com/employment')
-            // .then(res => res.json())
-            // .then(json => {
-            //     setData(json)
-            //     localStorage.setItem("employerData",JSON.stringify(json))
-            //     setLoaded(true)
-            // });
-            //axios.get()
+        //  fetch('https://sortbydistance.herokuapp.com/employment')
+        //  .then(res => res.json())
+        //  .then(json => {
+        //       setData(json)
+        //       localStorage.setItem("employerData",JSON.stringify(json))
+        //       setLoaded(true)
+        //  });
+        axios.get('http://204.48.17.151:8000/resources/employment').then(function(res){
+            setData(res.data)
+            setLoaded(true)
+        })
+    
 
 
         return () => console.log('unmounting...');
