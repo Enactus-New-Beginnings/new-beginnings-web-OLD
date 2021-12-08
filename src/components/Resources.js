@@ -129,7 +129,7 @@ export default function Resources(props) {
     const [foodLoading, setFood] = React.useState(true)
     const [tableCols, setTableCols] = React.useState(houseColumns)
     React.useEffect(() => {
-            fetch('http://204.48.17.151:8000/resources/housing')
+            fetch('https://apis.yinftw.com/nb/resources/housing')
             .then(res => res.json())
             .then(json => {
                 setData(json)
@@ -138,7 +138,7 @@ export default function Resources(props) {
             }, error=>{
                 console.log(error)
             });
-            fetch('http://204.48.17.151:8000/resources/food')
+            fetch('https://apis.yinftw.com/nb/resources/food')
             .then(res => res.json())
             .then(json => {
                 setFood(false)
@@ -146,7 +146,7 @@ export default function Resources(props) {
             }, error=>{
                 console.log(error)
             });
-            fetch('http://204.48.17.151:8000/resources/clothing')
+            fetch('https://apis.yinftw.com/nb/resources/clothing')
             .then(res => res.json())
             .then(json => {
                 setCloth(false)
