@@ -50,7 +50,7 @@ export default function Employment() {
         //       localStorage.setItem("employerData",JSON.stringify(json))
         //       setLoaded(true)
         //  });
-        axios.get('https://apis.yinftw.com/nb/resources/employment').then(function(res){
+        axios.get('https://us-central1-newbeginnings-7fed9.cloudfunctions.net/widgets/resources/employment').then(function(res){
             setData(res.data)
             setLoaded(true)
         })

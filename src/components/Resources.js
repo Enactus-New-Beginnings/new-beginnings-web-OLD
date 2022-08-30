@@ -129,7 +129,7 @@ export default function Resources(props) {
     const [foodLoading, setFood] = React.useState(true)
     const [tableCols, setTableCols] = React.useState(houseColumns)
     React.useEffect(() => {
-            fetch('https://apis.yinftw.com/nb/resources/housing')
+            fetch('https://us-central1-newbeginnings-7fed9.cloudfunctions.net/widgets/resources/housing')
             .then(res => res.json())
             .then(json => {
                 setData(json)
@@ -138,7 +138,7 @@ export default function Resources(props) {
             }, error=>{
                 console.log(error)
             });
-            fetch('https://apis.yinftw.com/nb/resources/food')
+            fetch('https://us-central1-newbeginnings-7fed9.cloudfunctions.net/widgets/resources/food')
             .then(res => res.json())
             .then(json => {
                 setFood(false)
@@ -146,7 +146,7 @@ export default function Resources(props) {
             }, error=>{
                 console.log(error)
             });
-            fetch('https://apis.yinftw.com/nb/resources/clothing')
+            fetch('https://us-central1-newbeginnings-7fed9.cloudfunctions.net/widgets/resources/clothing')
             .then(res => res.json())
             .then(json => {
                 setCloth(false)
